@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 
 import { auth } from "../firebase.js";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { toast } from "sonner";
 
 import Cookies from "js-cookie";
 
@@ -42,12 +43,10 @@ const Signup = () => {
 
       window.location.href = "/";
 
-      console.log("Firebase User:", user);
-      console.log("Token saved in cookie:", token);
-
+      toast.success("Account created & logged in successfully!");
       setSuccess("Account created & logged in successfully!");
     } catch (err) {
-      console.error("Signup Error:", err.message);
+      toast.error(err.message);
       setError(err.message);
     } finally {
       setLoading(false);

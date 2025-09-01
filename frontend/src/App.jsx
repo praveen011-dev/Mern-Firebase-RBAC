@@ -6,6 +6,8 @@ import { Routes, Route } from "react-router-dom";
 import { TaskList } from "./pages/TaskList";
 import { CreateTask } from "./pages/CreateTask";
 import Cookies from "js-cookie";
+import { Toaster } from "@/components/ui/sonner";
+import { UpdateTask } from "./pages/UpdateTask";
 
 const PrivateRoute = ({ children }) => {
   return Cookies.get("token") ? children : <Navigate to="/login" />;
@@ -35,7 +37,16 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route
+            path="/tasks/:id"
+            element={
+              <PrivateRoute>
+                <UpdateTask />
+              </PrivateRoute>
+            }
+          />
         </Routes>
+        <Toaster position="top-right" richColors />
       </div>
     </>
   );

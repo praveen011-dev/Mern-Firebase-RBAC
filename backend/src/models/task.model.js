@@ -10,6 +10,8 @@ const taskSchema = new Schema(
       default: "todo",
     },
     ownerUid: { type: String, required: true },
+    ownerEmail: { type: String, required: true },
+    ownerRole: { type: String, required: true },
   },
   { timestamps: true }
 );

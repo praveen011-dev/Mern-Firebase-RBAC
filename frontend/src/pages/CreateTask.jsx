@@ -4,6 +4,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import api from "@/utils/api";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 export const CreateTask = () => {
   const [title, setTitle] = useState("");
@@ -12,14 +13,15 @@ export const CreateTask = () => {
   const navigate = useNavigate();
 
   const handleCreate = async () => {
-    if (!title || !description) return alert("Title & description required");
+    if (!title || !description)
+      return toast.info("Title & description required");
     setLoading(true);
     try {
       await api.post("/tasks", { title, description });
-      alert("Task created successfully!");
-      navigate("/tasks"); // redirect to task list
+      toast.success("Task created successfully!");
+      navigate("/tasks");
     } catch (err) {
-      alert(err.response?.data?.message || err.message);
+      toast.error(err.response?.data?.message || err.message);
     } finally {
       setLoading(false);
     }

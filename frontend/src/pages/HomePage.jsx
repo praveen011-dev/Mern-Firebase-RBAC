@@ -1,7 +1,11 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Navbar } from "@/components/ui/sharedComponents/Navbar";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
+
 export const HomePage = () => {
+  const navigate = useNavigate();
   return (
     <>
       <Navbar />
@@ -15,15 +19,30 @@ export const HomePage = () => {
           Welcome to your personal task management dashboard. Track, organize,
           and complete your tasks with ease. Sign up or log in to get started!
         </p>
-        <Button
-          variant="default"
-          size="lg"
-          onClick={() =>
-            Cookies.get("token") ? navigate("/create-task") : navigate("/login")
-          }
-        >
-          Get Started
-        </Button>
+
+        <div className="flex gap-4">
+          <Button
+            variant="default"
+            size="lg"
+            onClick={() =>
+              Cookies.get("token")
+                ? navigate("/create-task")
+                : navigate("/login")
+            }
+          >
+            Get Started
+          </Button>
+
+          <Button
+            variant="secondary"
+            size="lg"
+            onClick={() =>
+              Cookies.get("token") ? navigate("/tasks") : navigate("/login")
+            }
+          >
+            All Tasks
+          </Button>
+        </div>
       </section>
     </>
   );

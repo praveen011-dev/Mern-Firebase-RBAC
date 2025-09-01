@@ -13,6 +13,7 @@ import {
 import { auth } from "../firebase.js";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import Cookies from "js-cookie";
+import { toast } from "sonner";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -43,12 +44,12 @@ const Login = () => {
         sameSite: "strict", // CSRF protection
       });
 
-      console.log("User loggedIn successfully:", user);
+      toast.success("User loggedIn successfully");
 
       // Example: redirect
       window.location.href = "/";
     } catch (err) {
-      console.error("Login Error:", err.message);
+      toast.error(err.message);
       setError(err.message);
     } finally {
       setLoading(false);

@@ -6,6 +6,8 @@ const createTask = async (req, res) => {
     title,
     description,
     ownerUid: req.user.uid,
+    ownerEmail: req.user.email,
+    ownerRole: req.user.role,
   });
   res.status(201).json({ message: "Task created successfully", task });
 };

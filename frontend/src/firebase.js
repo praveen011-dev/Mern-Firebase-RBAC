@@ -1,14 +1,15 @@
+import { meta } from "@eslint/js";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyB1TRAOcs4MgTXI4EkOjsMtPIcaVw77s_8",
-  authDomain: "mern-stack-firebase-rbac.firebaseapp.com",
-  projectId: "mern-stack-firebase-rbac",
-  storageBucket: "mern-stack-firebase-rbac.firebasestorage.app",
-  messagingSenderId: "729226537900",
-  appId: "1:729226537900:web:2b56326de2ba53a9fc6809",
+  apiKey: meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: meta.env.VITE_FIREBASE_APP_ID,
 };
 
 // Initialize Firebase

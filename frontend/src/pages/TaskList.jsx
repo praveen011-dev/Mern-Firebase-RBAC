@@ -47,7 +47,7 @@ export const TaskList = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-[60vh] w-1/2 mx-auto">
+    <div className="p-6 bg-gray-100 min-h-[60vh] w-1/2 mx-auto mt-6 shadow-lg rounded-lg">
       <h2 className="text-2xl font-bold mb-4">My Tasks</h2>
       {loading ? (
         <p>Loading tasks...</p>

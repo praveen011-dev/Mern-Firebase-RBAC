@@ -1,6 +1,5 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Navbar } from "@/components/ui/sharedComponents/Navbar";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
@@ -8,10 +7,8 @@ export const HomePage = () => {
   const navigate = useNavigate();
   return (
     <>
-      <Navbar />
-
       {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center py-16 bg-gray-50 min-h-[60vh]">
+      <section className="flex flex-col items-center justify-center py-16 bg-gray-50 min-h-[70vh]">
         <h1 className="text-4xl font-extrabold text-gray-800 mb-4 text-center">
           Organize Your Tasks Efficiently
         </h1>

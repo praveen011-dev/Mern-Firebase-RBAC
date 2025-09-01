@@ -8,6 +8,9 @@ import { CreateTask } from "./pages/CreateTask";
 import Cookies from "js-cookie";
 import { Toaster } from "@/components/ui/sonner";
 import { UpdateTask } from "./pages/UpdateTask";
+import { Profile } from "./pages/ProfilePage";
+import { Navbar } from "./components/ui/sharedComponents/Navbar";
+import Fotter from "./components/ui/sharedComponents/Fotter";
 
 const PrivateRoute = ({ children }) => {
   return Cookies.get("token") ? children : <Navigate to="/login" />;
@@ -15,8 +18,12 @@ const PrivateRoute = ({ children }) => {
 
 function App() {
   return (
-    <>
-      <div>
+    <div className="flex flex-col min-h-screen">
+      {/* Navbar */}
+      <Navbar />
+
+      {/* Main content */}
+      <main className="flex-1">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
@@ -45,10 +52,21 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
+          />
         </Routes>
         <Toaster position="top-right" richColors />
-      </div>
-    </>
+      </main>
+
+      {/* Footer */}
+      <Fotter />
+    </div>
   );
 }
 

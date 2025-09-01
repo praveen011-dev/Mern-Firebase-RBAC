@@ -10,13 +10,49 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 
+import { auth } from "../firebase.js";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import Cookies from "js-cookie";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(email, password);
+    setError("");
+    setLoading(true);
+
+    try {
+      // Firebase login
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      const user = userCredential.user;
+      const token = await user.getIdToken();
+
+      // Cookie me token save karo
+      Cookies.set("token", token, {
+        expires: 7, // 7 din valid
+        secure: true, // sirf https pr
+        sameSite: "strict", // CSRF protection
+      });
+
+      console.log("User loggedIn successfully:", user);
+
+      // Example: redirect
+      window.location.href = "/";
+    } catch (err) {
+      console.error("Login Error:", err.message);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -53,10 +89,12 @@ const Login = () => {
               />
             </div>
 
-            <Button type="submit" className="w-full">
-              Login
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? "Logging in..." : "Login"}
             </Button>
           </form>
+
+          {error && <p className="mt-3 text-red-600 text-sm">{error}</p>}
         </CardContent>
         <CardFooter className="flex justify-center">
           <p className="text-sm text-gray-600">

@@ -4,14 +4,54 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
+import { auth } from "../firebase.js";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+
+import Cookies from "js-cookie";
+
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
+    setError("");
+    setSuccess("");
+    setLoading(true);
+
+    try {
+      // Firebase ka signup function
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      const user = userCredential.user;
+
+      const token = await user.getIdToken();
+
+      Cookies.set("token", token, {
+        expires: 7,
+        secure: true,
+        sameSite: "strict",
+      });
+
+      window.location.href = "/";
+
+      console.log("Firebase User:", user);
+      console.log("Token saved in cookie:", token);
+
+      setSuccess("Account created & logged in successfully!");
+    } catch (err) {
+      console.error("Signup Error:", err.message);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -48,10 +88,13 @@ const Signup = () => {
               />
             </div>
 
-            <Button type="submit" className="w-full">
-              Signup
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? "Signing up..." : "Signup"}
             </Button>
           </form>
+
+          {error && <p className="mt-3 text-red-600 text-sm">{error}</p>}
+          {success && <p className="mt-3 text-green-600 text-sm">{success}</p>}
 
           <p className="mt-4 text-center text-sm">
             Already have an account?{" "}

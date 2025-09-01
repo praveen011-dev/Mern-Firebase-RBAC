@@ -2,7 +2,6 @@ import Task from "../models/task.model.js";
 
 const createTask = async (req, res) => {
   const { title, description } = req.body;
-
   const task = await Task.create({
     title,
     description,

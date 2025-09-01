@@ -1,4 +1,7 @@
 import admin from "firebase-admin";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const projectId = process.env.FIREBASE_PROJECT_ID;
 const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
@@ -15,4 +18,3 @@ if (!admin.apps.length) {
 }
 
 export default admin;
-

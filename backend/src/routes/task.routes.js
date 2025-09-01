@@ -1,6 +1,6 @@
 import express from "express";
-import { verifyAuth } from "../middleware/auth.middleware.js";
-import { requireRole } from "../middleware/requireRole.js";
+import verifyAuth from "../middleware/auth.middleware.js";
+import requireRole from "../middleware/requireRole.js";
 import {
   createTask,
   deleteTask,
